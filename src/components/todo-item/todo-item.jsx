@@ -1,52 +1,38 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import './todo-item.css';
 
-class TodoItem extends Component {
-  state = {
-    done: false,
-    important: false
+function TodoItem({ label, important, done, onUpdate, onDeleted }) {
+
+  const updateTodo = (payload) => () => {
+    onUpdate(payload);
   }
 
-  toggleDone = () => {
-    this.setState(state => ({ done: !state.done }));
-  }
+  const todoClass = `todo-item${ done ? ' done' : '' }`;
+  const titleClass = `title${ important ? ' important' : '' }`;
+  const buttonClass = `btn btn${ important ? '' : '-outline' }-success btn-sm`;
 
-  toggleImportant = () => {
-    this.setState(state => ({ important: !state.important }));
-  }
+  return (
+    <div className={ todoClass }>
+      <span className={ titleClass } onClick={ updateTodo({ done: !done }) }>{ label }</span>
 
-  removeTodo = () => {
-
-  }
-
-  render() {
-    const { label } = this.props;
-    const { done, important } = this.state;
-
-    return (
-      <div className={`todo-item${ done ? ' done' : '' }`}>
-        <span
-          className={`title${ important ? ' important' : '' }`}
-          onClick={this.toggleDone}
-        >{ label }</span>
-
-        <div>
-          <button className={`btn btn${ important ? '' : '-outline' }-success btn-sm`} onClick={this.toggleImportant}>
-            <i className="fa fa-exclamation" />
-          </button>
-          <button className="btn btn-outline-danger btn-sm" onClick={this.removeTodo}>
-            <i className="fa fa-trash-o" />
-          </button>
-        </div>
+      <div>
+        <button className={ buttonClass } onClick={ updateTodo({ important: !important }) }>
+          <i className="fa fa-exclamation" />
+        </button>
+        <button className="btn btn-outline-danger btn-sm" onClick={ onDeleted }>
+          <i className="fa fa-trash-o" />
+        </button>
       </div>
-    );
-  }
+    </div>
+  )
 }
 
 TodoItem.propTypes = {
   label: PropTypes.string,
-  important: PropTypes.bool
+  important: PropTypes.bool,
+  done: PropTypes.bool,
+  onUpdate: PropTypes.func
 };
 
 export default TodoItem;

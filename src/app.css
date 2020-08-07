@@ -12,3 +12,9 @@
 	grid-auto-flow: column;
 	grid-template-columns: auto 0.5fr;
 }
+
+.create-section {
+  border-top: 1px solid #6d6d6d;
+  padding-top: 1rem;
+  margin-top: 1.5rem;
+}
