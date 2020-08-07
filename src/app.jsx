@@ -20,7 +20,6 @@ function App() {
         <SearchFilter />
       </div>
       <TodoList list={list}/>
-      <button className="btn btn-primary">yo</button>
     </main>
   );
 }

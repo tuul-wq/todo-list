@@ -1,0 +1,14 @@
+.app-container {
+  display: grid;
+  row-gap: 1rem;
+  max-width: 40rem;
+  margin: auto;
+  padding: 2rem 1rem;
+}
+
+.search-section {
+	display: grid;
+	gap: 1rem;
+	grid-auto-flow: column;
+	grid-template-columns: auto 0.5fr;
+}

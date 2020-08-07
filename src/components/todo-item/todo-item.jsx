@@ -1,25 +1,52 @@
-import React from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './todo-item.css';
 
-function TodoItem({ label, important = false }) {
-  const style = {
-    color: important ? 'tomato' : 'black'
-  };
-  
-  return (
-    <div className="todo-item">
-      <span style={style} className="title">{ label }</span>
+class TodoItem extends Component {
+  state = {
+    done: false,
+    important: false
+  }
 
-      <div className="buttons">
-        <button className="btn btn-outline-success btn-sm">
-          <i className="fa fa-exclamation" />
-        </button>
-        <button className="btn btn-outline-danger btn-sm">
-          <i className="fa fa-trash-o" />
-        </button>
+  toggleDone = () => {
+    this.setState(state => ({ done: !state.done }));
+  }
+
+  toggleImportant = () => {
+    this.setState(state => ({ important: !state.important }));
+  }
+
+  removeTodo = () => {
+
+  }
+
+  render() {
+    const { label } = this.props;
+    const { done, important } = this.state;
+
+    return (
+      <div className={`todo-item${ done ? ' done' : '' }`}>
+        <span
+          className={`title${ important ? ' important' : '' }`}
+          onClick={this.toggleDone}
+        >{ label }</span>
+
+        <div>
+          <button className={`btn btn${ important ? '' : '-outline' }-success btn-sm`} onClick={this.toggleImportant}>
+            <i className="fa fa-exclamation" />
+          </button>
+          <button className="btn btn-outline-danger btn-sm" onClick={this.removeTodo}>
+            <i className="fa fa-trash-o" />
+          </button>
+        </div>
       </div>
-    </div>
-  )
+    );
+  }
 }
+
+TodoItem.propTypes = {
+  label: PropTypes.string,
+  important: PropTypes.bool
+};
 
 export default TodoItem;

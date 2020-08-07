@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import TodoItem from '../todo-item/todo-item';
 import './todo-list.css';
 
-function TodoList({ list }) {
+function TodoList ({ list }) {
   return (
     <ul className="list-group todo-list">
       { list.map(({ id, ...item }) =>
@@ -11,7 +12,11 @@ function TodoList({ list }) {
         </li>
       ) }
     </ul>
-  )
+  );
+}
+
+TodoList.propTypes = {
+  list: PropTypes.array
 };
 
 export default TodoList;
