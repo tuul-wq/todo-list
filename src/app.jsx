@@ -14,7 +14,9 @@ class App extends Component {
     list: [
       { label: 'Make a react app', important: true, id: 1 },
       { label: 'Become a great developer', important: false, id: 2 }
-    ]
+    ],
+    filterType: 'all',
+    filterLabel: '',
   }
 
   deleteTodo = (id) => {
@@ -39,19 +41,35 @@ class App extends Component {
     }));
   }
 
+  setFilterByType = (type) => {
+    this.setState({ filterType: type });
+  }
+
+  setFilterByLabel = (label) => {
+    this.setState({ filterLabel: label });
+  }
+
   render() {
-    const { list } = this.state;
+    const { list, filterType, filterLabel } = this.state;
+
+    const doneAmount = list.filter(item => item.done).length;
+    const totalAmount = list.length;
+
+    let filteredList = filterByType(list, filterType);
+    if (filterLabel) {
+      filteredList = filterByLabel(filteredList, filterLabel);
+    }
 
     return (
       <main className="app-container">
-        <AppHeader />
+        <AppHeader total={ totalAmount } done={ doneAmount }/>
         <div className="search-section">
-          <SearchInput />
-          <SearchFilter />
+          <SearchInput onFilter={ this.setFilterByLabel }/>
+          <SearchFilter filterType={ filterType } onSetFilter={ this.setFilterByType } />
         </div>
         {
-          list.length
-            ? <TodoList list={ list } onDeleted={ this.deleteTodo } onUpdate={ this.updateTodo } />
+          filteredList.length
+            ? <TodoList list={ filteredList } onDeleted={ this.deleteTodo } onUpdate={ this.updateTodo } />
             : <NoItems />
         }
         <div className="create-section">
@@ -60,6 +78,22 @@ class App extends Component {
       </main>
     );
   }
+}
+
+function filterByType(list, type) {
+  switch(type) {
+    case 'active':
+      return list.filter(item => !item.done);
+    case 'done':
+      return list.filter(item => item.done);
+    case 'all':
+    default:
+      return list;
+  }
+}
+
+function filterByLabel(list, text) {
+  return list.filter(item => new RegExp(text, 'gi').test(item.label));
 }
 
 export default App;

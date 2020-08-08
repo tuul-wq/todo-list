@@ -18,7 +18,9 @@ class NewTodo extends Component {
     this.setState({ label: event.target.value });
   }
 
-  onCreated = () => {
+  onCreated = (event) => {
+    event.preventDefault();
+
     if (!this.state.label) return;
     this.props.onCreated({ ...this.state });
     this.setState({ label: '', important: false });
@@ -29,7 +31,7 @@ class NewTodo extends Component {
     const buttonClass = `btn btn${ important ? '' : '-outline' }-success btn-sm`;
 
     return (
-      <div className="new-todo">
+      <form className="new-todo" onSubmit={ this.onCreated }>
         <input
           type="text"
           className="form-control"
@@ -37,13 +39,13 @@ class NewTodo extends Component {
           placeholder="New todo"
           onChange={ this.handleChange }
         />
-        <button className={ buttonClass } onClick={ this.toggleImportant }>
+        <button type="button" className={ buttonClass } onClick={ this.toggleImportant }>
           <i className="fa fa-exclamation" />
         </button>
-        <button className="btn btn-outline-success btn-sm" onClick={ this.onCreated }>
+        <button type="submit" className="btn btn-outline-success btn-sm">
           <i className="fa fa-plus"/>
         </button>
-      </div>
+      </form>
     );
   }
 }

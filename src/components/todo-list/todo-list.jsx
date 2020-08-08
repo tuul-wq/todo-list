@@ -7,11 +7,11 @@ function TodoList ({ list, onDeleted, onUpdate }) {
 
   const deleteTodo = (id) => () => {
     onDeleted(id);
-  }
+  };
 
   const updateTodo = (id) => (payload) => {
     onUpdate({ id, payload });
-  }
+  };
 
   return (
     <ul className="list-group">

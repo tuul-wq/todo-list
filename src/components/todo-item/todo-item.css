@@ -1,6 +1,8 @@
 .todo-item {
-  display: flex;
-  justify-content: space-between;
+	display: grid;
+	grid-auto-flow: column;
+	grid-template-columns: auto max-content;
+	align-items: center;
 }
 
 .todo-item.done .title {
@@ -9,8 +11,14 @@
 
 .todo-item .title {
   cursor: pointer;
-  font-size: 1.25rem;
+  font-size: 1rem;
   color: #353535;
+}
+
+@media only screen and (min-width: 576px) {
+  .todo-item .title {
+    font-size: 1.15rem;
+  }
 }
 
 .todo-item .title.important {

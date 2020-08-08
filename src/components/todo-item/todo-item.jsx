@@ -6,7 +6,7 @@ function TodoItem({ label, important, done, onUpdate, onDeleted }) {
 
   const updateTodo = (payload) => () => {
     onUpdate(payload);
-  }
+  };
 
   const todoClass = `todo-item${ done ? ' done' : '' }`;
   const titleClass = `title${ important ? ' important' : '' }`;
@@ -25,7 +25,7 @@ function TodoItem({ label, important, done, onUpdate, onDeleted }) {
         </button>
       </div>
     </div>
-  )
+  );
 }
 
 TodoItem.propTypes = {
